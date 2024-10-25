@@ -50,12 +50,38 @@ export class PokemonDm extends LitElement {
     }
   }
 
-  constructor() {
-    super();
-    this.name = 'Cells';
+  async changePage(page) {
+    this.currentPage = page;
+    await this.fetchPokemons();
   }
 
+  async nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      await this.fetchPokemons();
+    }
+  }
 
+  async prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      await this.fetchPokemons();
+    }
+  }
 
-  
+  get totalPages() {
+    return Math.ceil(this.totalPokemons / this.perPage);
+  }
+
+  get visiblePages() {
+    const total = this.totalPages;
+    const pages = [];
+    const startPage = Math.max(1, this.currentPage - 1);
+    const endPage = Math.min(total, this.currentPage + 1);
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    return pages;
+  }
+
 }
