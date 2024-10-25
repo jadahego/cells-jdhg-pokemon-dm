@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "index.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PokemonDm",
+          "declaration": {
+            "name": "PokemonDm",
+            "module": "./src/PokemonDm.js"
+          }
+        }
+      ],
+      "entrypoint": "index.js",
+      "defaultEntrypoint": true
+    },
+    {
+      "kind": "javascript-module",
+      "path": "pokemon-dm.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "pokemon-dm",
+          "declaration": {
+            "name": "PokemonDm",
+            "module": "/src/PokemonDm.js"
+          }
+        }
+      ],
+      "entrypoint": "pokemon-dm.js",
+      "defaultEntrypoint": false
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/PokemonDm.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "![LitElement component](https://img.shields.io/badge/litElement-component-blue.svg)\n\nThis component ...\n\nExample:\n\n```html\n  <pokemon-dm></pokemon-dm>\n```",
+          "name": "PokemonDm",
+          "members": [
+            {
+              "kind": "field",
+              "name": "name",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "description": "Description for property",
+              "default": "\"Cells\"",
+              "attribute": "name"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "description": "Description for property",
+              "default": "\"Cells\"",
+              "fieldName": "name"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit-element"
+          },
+          "tagName": "pokemon-dm",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PokemonDm",
+          "declaration": {
+            "name": "PokemonDm",
+            "module": "src/PokemonDm.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pokemon-dm.css.js",
+      "declarations": [
+        {
+          "kind": "js",
+          "name": "default",
+          "cssCustomProperties": []
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "module": "src/pokemon-dm.css.js"
+          }
+        }
+      ]
+    }
+  ],
+  "packageName": "@meraki/pokemon-dm"
+}
