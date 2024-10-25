@@ -2,6 +2,33 @@ import { LitElement} from 'lit-element';
 
 export class PokemonDm extends LitElement {
 
+  static get properties() {
+    return {
+      pokemons: { type: Array },
+      currentPage: { type: Number },
+      searchQuery: { type: String },
+      totalPokemons: { type: Number },
+      perPage: { type: Number },
+      searchResults: { type: Array },
+      selectedEvolutions: { type: Array },
+      loading: {type: Boolean},
+      detailOpened: {type: Boolean, attribute: false,},
+    };
+  }
+
+  constructor() {
+    super();
+    this.pokemons = [];
+    this.currentPage = 1;
+    this.searchQuery = '';
+    this.totalPokemons = 0;
+    this.perPage = 10;
+    this.selectedEvolutions = null;
+    this.searchResults = [];
+    this.isModalOpen = false;
+    this.modalMessage = '';
+  }
+
   async fetchPokemons() {
     const offset = (this.currentPage - 1) * this.perPage;
 
