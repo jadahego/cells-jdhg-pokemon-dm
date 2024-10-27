@@ -8,6 +8,7 @@ export class PokemonDm extends LitElement {
         currentPage: { type: Number },
         totalPokemons: { type: Number },
         perPage: { type: Number },
+        selectedEvolutions: { type: Array },
     };
 }
 
