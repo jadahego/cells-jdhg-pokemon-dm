@@ -1,9 +1,12 @@
+package-lock.json
+
 coverage/
 node_modules/
 reports/
 dist/
 build/
 components/
+
 
 *-log.json
 *-error.json
