@@ -5,14 +5,9 @@ export class PokemonDm extends LitElement {
   static get properties() {
     return {
         pokemons: { type: Array },
-        searchResults: { type: Array },
-        selectedEvolutions: { type: Array },
-        searchQuery: { type: String },
         currentPage: { type: Number },
         totalPokemons: { type: Number },
         perPage: { type: Number },
-        loading: { type: Boolean },
-        detailOpened: { type: Boolean, attribute: false, },
     };
 }
 
@@ -20,16 +15,8 @@ constructor() {
     super();
     this.pokemons = [];
     this.currentPage = 1;
-    this.searchQuery = '';
     this.totalPokemons = 0;
     this.perPage = 10;
-    this.selectedEvolutions = [];
-    this.searchResults = [];
-    this.loading = false;
-    this.isModalOpen = false;
-    this.visiblePages = []
-    this.changePage = this.changePage.bind(this);
-
 }
   
   async fetchPokemons() {
