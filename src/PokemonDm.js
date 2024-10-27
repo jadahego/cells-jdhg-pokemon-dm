@@ -39,4 +39,43 @@ get visiblePages() {
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
 }
 
+async searchPokemons() {
+  if (this.searchQuery.length < 1) {
+      this.pokemons = [];
+      return;
+  }
+
+  const idQuery = parseInt(this.searchQuery);
+
+  if (!isNaN(idQuery)) {
+      try {
+          const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${idQuery}`);
+          if (response.ok) {
+              this.pokemons = [await response.json()];
+          } else {
+              this.pokemons = [];
+          }
+      } catch (error) {
+          console.error('Error al buscar Pokémon por ID:', error);
+          this.pokemons = [];
+      }
+  } else {
+      try {
+          const allPokemonsResponse = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
+          const allPokemons = await allPokemonsResponse.json();
+
+          this.pokemons = await Promise.all(allPokemons.results
+              .filter(pokemon => pokemon.name.startsWith(this.searchQuery.toLowerCase()))
+              .map(async pokemon => {
+                  const pokemonResponse = await fetch(pokemon.url);
+                  return pokemonResponse.ok ? await pokemonResponse.json() : null;
+              })
+          );
+      } catch (error) {
+          console.error('Error al buscar Pokémon por nombre:', error);
+          this.pokemons = [];
+      }
+  }
+}
+
 }
