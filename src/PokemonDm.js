@@ -41,7 +41,6 @@ get visiblePages() {
 
 async searchPokemons() {
   if (this.searchQuery.length < 1) {
-      this.pokemons = [];
       return;
   }
 
