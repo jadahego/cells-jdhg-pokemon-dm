@@ -94,4 +94,44 @@ async searchPokemons() {
   }
 }
 
+async fetchEvolutionChain(pokemon) {
+    try {
+        const speciesResponse = await fetch(pokemon.species.url);
+        const speciesData = await speciesResponse.json();
+
+        if (speciesData.evolution_chain) {
+            const evolutionChainResponse = await fetch(speciesData.evolution_chain.url);
+            const evolutionChainData = await evolutionChainResponse.json();
+            return evolutionChainData;
+        }
+        return null;
+    } catch (error) {
+        console.error("Error al obtener la cadena de evolución:", error);
+        return null;
+    }
+}
+
+async showEvolution(pokemon) {
+    const evolutionChain = await this.fetchEvolutionChain(pokemon);
+    if (evolutionChain) {
+        const evolutions = await this.getEvolutions(evolutionChain.chain);
+        this.selectedEvolutions = evolutions;
+    }
+}
+
+async getEvolutions(chain) {
+    const evolutions = [];
+    let current = chain;
+
+    while (current) {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${current.species.name}`);
+        if (response.ok) {
+            const pokemonData = await response.json();
+            evolutions.push(pokemonData);
+        }
+        current = current.evolves_to[0] || null;
+    }
+    return evolutions;
+}
+
 }
