@@ -41,7 +41,7 @@ get visiblePages() {
 
 async searchPokemons() {
   if (this.searchQuery.length < 1) {
-      return;
+      return this.fetchPokemons();
   }
 
   const idQuery = parseInt(this.searchQuery);
