@@ -8,7 +8,6 @@ export class PokemonDm extends LitElement {
         currentPage: { type: Number },
         totalPokemons: { type: Number },
         perPage: { type: Number },
-        searchQuery: { type: String },
     };
 }
 
@@ -18,7 +17,6 @@ constructor() {
     this.currentPage = 1;
     this.totalPokemons = 0;
     this.perPage = 10;
-    this.searchQuery = '';
 }
   
   async fetchPokemons() {
@@ -142,5 +140,7 @@ async getEvolutions(chain) {
     }
     return evolutions;
 }
+
+
 
 }
