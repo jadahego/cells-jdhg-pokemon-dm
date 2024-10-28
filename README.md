@@ -78,9 +78,23 @@ async firstUpdated() {
 The PokemonDm component is a custom web component built with LitElement that manages the logic for searching, listing, and displaying Pokémon details. It allows users to search for Pokémon by name or ID and view their evolution chains when available. The component interacts with the PokéAPI to fetch relevant data, providing essential features such as pagination, evolution views.
 Example:
 
+```js
+async handleInput(ev) {
+        this.searchQuery = ev.target.value;
+        this.updateState();
+        await this._dm.searchPokemons()
+        this.updateState();
+    }
+```
+
 ```html
+  <div class="search-bar">
+    <input id="searchInput" type="text" placeholder="Search by ID or Name" @input="${this.handleInput}">
+  </div>
   <pokemon-dm></pokemon-dm>
 ```
+![search](resource/search.png)
+
 
 ### Properties
 
