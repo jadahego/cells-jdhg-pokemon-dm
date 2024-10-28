@@ -2,6 +2,8 @@
 
 ## Package info
 
+This package provides the `PokemonDm` component, a custom LitElement-based element that handles the logic for viewing and searching information about Pokémon using the PokéAPI.
+
 ### Package installation
 
 Installation using NPM
@@ -9,6 +11,20 @@ Installation using NPM
 ```bash
 npm install @meraki/pokemon-dm
 ```
+
+packege.json:  "dependencies": {
+    "@meraki/pokemon-dm": "version"
+  },
+ 
+```bash
+npm install 
+``` 
+
+### Prerequisites
+
+- Node.js v14+
+- LitElement v2+
+- Access to the PokéAPI for real-time data consumption
 
 ### Entry points & exports
 
@@ -40,6 +56,13 @@ Use the custom element (defined globally):
 
 ```js
 import '@meraki/pokemon-dm/pokemon-dm.js';
+
+async firstUpdated() {
+        const queryScope = this.shadowRoot || this;
+        this._dm = queryScope.querySelector('pokemon-dm');
+        await this._dm.fetchPokemons();
+        this.updateState();
+}
 ```
 
 ```html
@@ -52,8 +75,7 @@ import '@meraki/pokemon-dm/pokemon-dm.js';
 
 ![LitElement component](https://img.shields.io/badge/litElement-component-blue.svg)
 
-This component ...
-
+The PokemonDm component is a custom web component built with LitElement that manages the logic for searching, listing, and displaying Pokémon details. It allows users to search for Pokémon by name or ID and view their evolution chains when available. The component interacts with the PokéAPI to fetch relevant data, providing essential features such as pagination, evolution views.
 Example:
 
 ```html
@@ -62,5 +84,20 @@ Example:
 
 ### Properties
 
-- **name**: string = "Cells" (attribute: name)
-    Description for property
+- **pokemons**: `Array`  
+  _(type: Array)_  
+  Description: List of all available Pokémon.
+
+  - **currentPage**: `number`  
+  _(type: Number)_  
+  Description: Current page number in the list of results.
+
+- **totalPokemons**: `number`  
+  _(type: Number)_  
+  Description: Total number of Pokémon available in the database.
+
+- **perPage**: `number`  
+  _(type: Number)_  
+  Description: Number of Pokémon displayed per page.
+
+  This README provides a detailed overview of the PokemonDm component, outlining its functionality for managing Pokémon data. It covers the component's logic for searching, listing, and retrieving evolution information, as well as its integration with the PokéAPI. Key features include event handling, property configuration, and methods for efficient data management.
