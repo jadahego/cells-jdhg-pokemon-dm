@@ -8,6 +8,7 @@ export class PokemonDm extends LitElement {
         currentPage: { type: Number },
         totalPokemons: { type: Number },
         perPage: { type: Number },
+        searchQuery: { type: String },
     };
 }
 
@@ -17,6 +18,7 @@ constructor() {
     this.currentPage = 1;
     this.totalPokemons = 0;
     this.perPage = 10;
+    this.searchQuery = '';
 }
   
   async fetchPokemons() {
@@ -57,42 +59,49 @@ get visiblePages() {
 }
 
 async searchPokemons() {
-  if (this.searchQuery.length < 1) {
+    if (this.searchQuery.length < 1) {
       return this.fetchPokemons();
-  }
-
-  const idQuery = parseInt(this.searchQuery);
-
-  if (!isNaN(idQuery)) {
+    }
+  
+    const idQuery = parseInt(this.searchQuery);
+  
+    if (!isNaN(idQuery)) {
       try {
-          const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${idQuery}`);
-          if (response.ok) {
-              this.pokemons = [await response.json()];
-          } else {
-              this.pokemons = [];
-          }
-      } catch (error) {
-          console.error('Error al buscar Pokémon por ID:', error);
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${idQuery}`);
+        if (response.ok) {
+          this.pokemons = [await response.json()];
+        } else {
           this.pokemons = [];
+        }
+      } catch (error) {
+        console.error('Error al buscar Pokémon por ID:', error);
+        this.pokemons = [];
       }
-  } else {
+    } else {
       try {
-          const allPokemonsResponse = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
-          const allPokemons = await allPokemonsResponse.json();
-
-          this.pokemons = await Promise.all(allPokemons.results
+        const allPokemonsResponse = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
+        const allPokemons = await allPokemonsResponse.json();
+  
+        if (allPokemons.results && Array.isArray(allPokemons.results)) {
+          this.pokemons = (await Promise.all(
+            allPokemons.results
               .filter(pokemon => pokemon.name.startsWith(this.searchQuery.toLowerCase()))
               .map(async pokemon => {
-                  const pokemonResponse = await fetch(pokemon.url);
-                  return pokemonResponse.ok ? await pokemonResponse.json() : null;
+                const pokemonResponse = await fetch(pokemon.url);
+                return pokemonResponse.ok ? await pokemonResponse.json() : null;
               })
-          );
+          )).filter(pokemon => pokemon !== null);
+        } else {
+          this.pokemons = allPokemons.name ? [allPokemons] : [];
+        }
       } catch (error) {
-          console.error('Error al buscar Pokémon por nombre:', error);
-          this.pokemons = [];
+        console.error('Error al buscar Pokémon por nombre:', error);
+        this.pokemons = [];
       }
+    }
   }
-}
+  
+  
 
 async fetchEvolutionChain(pokemon) {
     try {
